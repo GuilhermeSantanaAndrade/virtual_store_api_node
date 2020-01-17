@@ -15,12 +15,12 @@ Res.prototype.getSend = function() {
   return this._value;
 };
 
-describe("Testes do controller de vendas", function() {
-  it("Verifica se o ID 1 retorna venda", function() {
+describe("Testes do controller de vendas", () => {
+  it("Verifica se o ID 1 retorna venda", () => {
     var req = { query: 1 };
     var res = new Res();
 
-    vendas.consultar(config, req, res, function() {
+    vendas.consultar(config, req, res, () => {
       const result = res.getSend();
 
       assert.typeOf(result, "string", "'result' não retornou uma string");
@@ -34,7 +34,9 @@ describe("Testes do controller de vendas", function() {
         arrResult.filter(elem => elem.id === 1).length > 0,
         "Não foi encontrado elemento de ID 1 no retorno"
       );
-      app.close();
     });
+
+    it("Verifica se insere corretamente venda", () => {});
+    app.close();
   });
 });
