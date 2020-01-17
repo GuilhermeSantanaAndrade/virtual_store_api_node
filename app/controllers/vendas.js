@@ -24,13 +24,18 @@ module.exports.inserir = function(application, req, res) {
   });
 };
 
-module.exports.consultar = function(application, req, res) {
+module.exports.consultar = function(application, req, res, callback) {
   var query = req.query;
 
   var connection = application.config.dbConnection();
   var model = new application.app.models.VendasDAO(connection);
 
   model.consultar(query.id, function(error, result) {
-    res.send(JSON.stringify(result ? result : error));
+    const processedResult = JSON.stringify(result ? result : error);
+    res.send(processedResult);
+    if (callback) {
+      callback(processedResult);
+    }
+    connection.end();
   });
 };
